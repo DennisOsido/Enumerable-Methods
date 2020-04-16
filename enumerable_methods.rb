@@ -16,12 +16,22 @@ module Enumerable
 		i = 0
 		index = 0
     while i < self.size do
-      yield(self[i], index)
+      yield(self[i], i)
       i += 1
     end
     self
   end
 
+	def my_select
+    return to_enum(:my_select) unless block_given?
+    selected_array = []
+    my_each do |element|
+      if yield(element)
+        selected_array << element
+      end
+    end
+    selected_array
+  end
 
 end
 # rubocop:enable Style/CaseEquality
@@ -40,6 +50,18 @@ puts
 puts "my_each_with_index method"
 [2, 4, 6, 8].my_each_with_index do |n, index|
 	puts "Index: #{index} | Value: #{n}"
+end
+
+puts
+
+puts "my_select method"
+nums_array = [5, -4, 0, 9]
+print "Sample Array of Numbers: #{nums_array}"
+puts
+nums_array.my_select do |x|
+  if x.positive?
+    puts "#{x} is positive"
+  end
 end
 
 puts
