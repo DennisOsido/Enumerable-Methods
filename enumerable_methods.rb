@@ -33,6 +33,19 @@ module Enumerable
     selected_array
   end
 
+  def my_all?
+    return to_enum(:my_all) unless block_given?
+    result = false
+    my_each do |element|
+      if yield(element)
+        result = true
+      else
+        result = false
+      end
+    end
+    result
+  end
+
 end
 # rubocop:enable Style/CaseEquality
 
@@ -64,4 +77,13 @@ nums_array.my_select do |x|
   end
 end
 
+puts
+
+puts "my_all? method"
+nums = [13, 7, 25, 39]
+print nums
+puts
+print "All are odd? = "
+print nums.my_all? { |n| n.odd? }
+puts
 puts
