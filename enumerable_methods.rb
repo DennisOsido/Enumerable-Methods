@@ -47,6 +47,31 @@ module Enumerable
     result
   end
 
+  def my_any?(p = nil)
+    return my_any?(p) if block_given? && !p.nil?
+    if block_given?
+      to_a.my_each do |element|
+        if yield element
+          return true
+        end  
+      false
+      end
+    elsif p
+      to_a.my_each do |element|
+        if element == p
+          return true
+        end  
+      end  
+    elsif p.nil?
+      to_a.my_each do |element|  
+        if element
+          return true
+        end  
+      end
+    end
+    false
+  end
+
 end
 # rubocop:enable Style/CaseEquality
 
@@ -81,10 +106,19 @@ end
 puts
 
 puts "my_all? method"
-nums = [13, 7, 25, 39]
+nums = [13, 7, 24, 39]
 print nums
 puts
 print "All are odd? = "
 print nums.my_all? { |n| n.odd? }
 puts
+puts
+
+puts "my_any? method"
+nums = [13, 7, 25, 38]
+print nums
+puts
+print "Is any even? = "
+print nums.my_any? { |n| n.even? }
+
 puts
