@@ -72,6 +72,31 @@ module Enumerable
     false
   end
 
+  def my_none?(p = nil)
+    return my_none?(p) if block_given? && !p.nil?
+    if block_given?
+      to_a.my_each do |element|
+        if yield element
+          return false
+        end  
+      false
+      end
+    elsif p
+      to_a.my_each do |element|
+        if element == p
+          return false
+        end  
+      end  
+    elsif p.nil?
+      to_a.my_each do |element|  
+        if element
+          return false
+        end  
+      end
+    end
+    true
+  end
+
 end
 # rubocop:enable Style/CaseEquality
 
@@ -120,5 +145,14 @@ print nums
 puts
 print "Is any even? = "
 print nums.my_any? { |n| n.even? }
+puts
+puts
 
+puts "my_none? method"
+nums = [13, 7, 25, 39]
+print nums
+puts
+print "None are even? = "
+print nums.my_none? { |n| n.even? }
+puts
 puts
