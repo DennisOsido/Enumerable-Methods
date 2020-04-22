@@ -33,14 +33,15 @@ module Enumerable
     selected_array
   end
 
-  def my_all?
-    return to_enum(:my_all) unless block_given?
-    result = false
-    my_each do |element|
-      if yield(element)
-        result = true
-      else
-        result = false
+  def my_all?(p = nil)
+    result = true
+    if block_given?
+      my_each do |element| 
+        result = false unless yield(element)
+      end
+    else
+      my_each do |element| 
+        result = false unless element
       end
     end
     result
