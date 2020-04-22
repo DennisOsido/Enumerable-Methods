@@ -117,6 +117,20 @@ module Enumerable
     count
   end
 
+  def my_map(prc = nil)
+    arr = []
+    if prc
+      my_each do |elem|
+        arr << prc.call(elem)
+      end  
+    else
+      my_each do |elem| 
+        arr << yield(elem)
+      end  
+    end
+    arr
+  end
+
 end
 # rubocop:enable Style/CaseEquality
 
@@ -183,5 +197,16 @@ print nums
 puts
 print "How many are even? = "
 print nums.my_count { |n| n.even? }
+puts
+puts
+
+puts "my_map method"
+nums = [2, 4, 6, 8]
+print nums
+puts
+nums.my_map do |n|
+  n * 2
+  puts "#{n} multiplied by 2 is: #{n}"
+end
 puts
 puts
