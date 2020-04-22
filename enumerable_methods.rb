@@ -97,6 +97,26 @@ module Enumerable
     true
   end
 
+  def my_count(p = nil)
+    count = 0
+    if block_given?
+      my_each do |element|
+        if yield(element)
+          count += 1 
+        end  
+      end
+    elsif p
+      my_each do |element|
+        if element == p
+          count += 1 
+        end  
+      end
+    else
+      count = size
+    end
+    count
+  end
+
 end
 # rubocop:enable Style/CaseEquality
 
@@ -154,5 +174,14 @@ print nums
 puts
 print "None are even? = "
 print nums.my_none? { |n| n.even? }
+puts
+puts
+
+puts "my_count method"
+nums = [13, 8, 24, 39]
+print nums
+puts
+print "How many are even? = "
+print nums.my_count { |n| n.even? }
 puts
 puts
