@@ -131,6 +131,35 @@ module Enumerable
     arr
   end
 
+  def my_inject(p1 = nil, p2 = nil)
+    array = is_a?(Array) ? self:to_a
+    if p1.is_a?(Symbol) or p1.is_a?(String)
+      symbol = p1
+    end
+  
+    if p1.is_a?(Integer)
+      accumulate = p1
+      if p2.is_a?(Symbol) or p2.is_a?(String)
+        symbol = p2
+      end  
+    end
+  
+    if symbol
+      array.my_each do |i| 
+        accumulate = accumulate ? accumulate.send(symbol, i) : i
+      end  
+    elsif block_given?
+      array.my_each do |i| 
+        accumulate = accumulate ? yield(accumulate, i) : i
+      end  
+    end
+    accumulate
+  end
+  
+  def multiply_els(array)
+  array.my_inject(:*)
+  end
+
 end
 # rubocop:enable Style/CaseEquality
 
@@ -208,5 +237,13 @@ nums.my_map do |n|
   n * 2
   puts "#{n} multiplied by 2 is: #{n}"
 end
+puts
+
+puts "my_inject method"
+nums = [1, 2, 3, 4]
+print nums
+puts
+print "my_inject add: "
+print nums.my_inject("+") 
 puts
 puts
