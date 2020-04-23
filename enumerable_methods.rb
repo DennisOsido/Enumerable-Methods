@@ -55,6 +55,18 @@ module Enumerable
 
         false
       end
+    elsif para.is_a? Regexp
+      to_a.my_each do |element| 
+        if element.to_s.match(para)
+          return true
+        end
+      end   
+    elsif para.is_a? Class
+      to_a.my_each do |element|      
+        if element.is_a? para
+          return true
+        end  
+      end  
     elsif para
       to_a.my_each do |element|
         return true if element == para
@@ -76,6 +88,18 @@ module Enumerable
 
         false
       end
+    elsif para.is_a? Regexp
+      to_a.my_each do |element| 
+        if element.to_s.match(para)
+          return false
+        end
+      end   
+    elsif para.is_a? Class
+      to_a.my_each do |element|      
+        if element.is_a? para
+          return false
+        end  
+      end  
     elsif para
       to_a.my_each do |element|
         return false if element == para
