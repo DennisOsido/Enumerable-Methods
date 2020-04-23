@@ -40,7 +40,7 @@ module Enumerable
       elsif para.nil?
         result = false unless element
       else
-        result = false unless para === element  
+        result = false unless para === element
       end
     end
     result
@@ -56,17 +56,13 @@ module Enumerable
         false
       end
     elsif para.is_a? Regexp
-      to_a.my_each do |element| 
-        if element.to_s.match(para)
-          return true
-        end
-      end   
+      to_a.my_each do |element|
+        return true if element.to_s.match(para)
+      end
     elsif para.is_a? Class
-      to_a.my_each do |element|      
-        if element.is_a? para
-          return true
-        end  
-      end  
+      to_a.my_each do |element|
+        return true if element.is_a? para
+      end
     elsif para
       to_a.my_each do |element|
         return true if element == para
@@ -89,17 +85,13 @@ module Enumerable
         false
       end
     elsif para.is_a? Regexp
-      to_a.my_each do |element| 
-        if element.to_s.match(para)
-          return false
-        end
-      end   
+      to_a.my_each do |element|
+        return false if element.to_s.match(para)
+      end
     elsif para.is_a? Class
-      to_a.my_each do |element|      
-        if element.is_a? para
-          return false
-        end  
-      end  
+      to_a.my_each do |element|
+        return false if element.is_a? para
+      end
     elsif para
       to_a.my_each do |element|
         return false if element == para
@@ -130,13 +122,10 @@ module Enumerable
 
   def my_map(prc = nil)
     arr = []
-    unless prc or block_given?
-      return to_enum(:my_map)
-    end  
+    return to_enum(:my_map) unless prc or block_given?
+
     my_each do |elem|
-      if block_given?
-        mapped = yield(elem)
-      end  
+      mapped = yield(elem) if block_given?
       arr.push(prc ? prc.call(elem) : mapped)
     end
     arr
@@ -167,13 +156,3 @@ module Enumerable
 end
 
 # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-
-p [2,4,7,11].my_map
-
-  #8. my_map
-  p [1,2,3].my_map { |n| 2 * n } # => [2,4,6]
-  p ["Hey", "Jude"].my_map { |word| word + "?" } # => ["Hey?", "Jude?"]
-  p [false, true].my_map { |bool| !bool } # => [true, false]
-my_proc = Proc.new {|num| num > 10 }
-p [18, 22, 5, 6] .my_map(my_proc) {|num| num < 10 } # => true true false false
-  puts
