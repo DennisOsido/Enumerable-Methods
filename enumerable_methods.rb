@@ -130,14 +130,14 @@ module Enumerable
 
   def my_map(prc = nil)
     arr = []
-    if prc
-      my_each do |elem|
-        arr << prc.call(elem)
-      end
-    else
-      my_each do |elem|
-        arr << yield(elem)
-      end
+    unless prc or block_given?
+      return to_enum(:my_map)
+    end  
+    my_each do |elem|
+      if block_given?
+        mapped = yield(elem)
+      end  
+      arr.push(prc ? prc.call(elem) : mapped)
     end
     arr
   end
@@ -167,3 +167,13 @@ module Enumerable
 end
 
 # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+
+p [2,4,7,11].my_map
+
+  #8. my_map
+  p [1,2,3].my_map { |n| 2 * n } # => [2,4,6]
+  p ["Hey", "Jude"].my_map { |word| word + "?" } # => ["Hey?", "Jude?"]
+  p [false, true].my_map { |bool| !bool } # => [true, false]
+my_proc = Proc.new {|num| num > 10 }
+p [18, 22, 5, 6] .my_map(my_proc) {|num| num < 10 } # => true true false false
+  puts
