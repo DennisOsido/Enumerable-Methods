@@ -32,15 +32,15 @@ module Enumerable
     selected_array
   end
 
-  def my_all?(_para = nil)
+  def my_all?(para = nil)
     result = true
-    if block_given?
-      my_each do |element|
+    my_each do |element|
+      if block_given?
         result = false unless yield(element)
-      end
-    else
-      my_each do |element|
+      elsif para.nil?
         result = false unless element
+      else
+        result = false unless para === element  
       end
     end
     result
