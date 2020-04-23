@@ -20,7 +20,7 @@ It is a collection of methods in Ruby.
 
 ## Live Demo
 
-[Live Demo](https://repl.it/)
+[Live Demo](https://repl.it/@Denz79/enumerablemethods)
 
 ## Getting Started
 
@@ -30,7 +30,8 @@ It is a collection of methods in Ruby.
 To get a local copy up and running follow these simple example steps.
 - Clone the project unto your local machine
 - `cd` into the project directory
-- run ruby enumerable_methods.rb in terminal 
+- run ruby enumerable_methods.rb in terminal
+- copy test_cases.txt to enumerable_methods.rb file for sample output
 
 ## 🤝 Contributing
 
