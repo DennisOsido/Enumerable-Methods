@@ -1,0 +1,82 @@
+puts
+puts 'my_each method'
+
+nums = [2, 4, 6, 8]
+nums.my_each do |n|
+  n /= 2
+  puts "#{nums[n - 1]} divided by 2 is: #{n}"
+end
+
+puts
+
+puts 'my_each_with_index method'
+[2, 4, 6, 8].my_each_with_index do |n, index|
+  puts "Index: #{index} | Value: #{n}"
+end
+
+puts
+
+puts 'my_select method'
+nums_array = [5, -4, 0, 9]
+print "Sample Array of Numbers: #{nums_array}"
+puts
+nums_array.my_select do |x|
+  puts "#{x} is positive" if x.positive?
+end
+
+puts
+
+puts 'my_all? method'
+nums = [13, 7, 24, 39]
+print nums
+puts
+print 'All are odd? = '
+print nums.my_all?(&:odd?)
+puts
+puts
+
+puts 'my_any? method'
+nums = [13, 7, 25, 38]
+print nums
+puts
+print 'Is any even? = '
+print nums.my_any?(&:even?)
+puts
+puts
+
+puts 'my_none? method'
+nums = [13, 7, 25, 39]
+print nums
+puts
+print 'None are even? = '
+print nums.my_none?(&:even?)
+puts
+puts
+
+puts 'my_count method'
+nums = [13, 8, 24, 39]
+print nums
+puts
+print 'How many are even? = '
+print nums.my_count(&:even?)
+puts
+puts
+
+puts 'my_map method'
+nums = [2, 4, 6, 8]
+print nums
+puts
+nums.my_map do |n|
+  n * 2
+  puts "#{n} multiplied by 2 is: #{n}"
+end
+puts
+
+puts 'my_inject method'
+nums = [1, 2, 3, 4]
+print nums
+puts
+print 'my_inject add: '
+print nums.my_inject('+')
+puts
+puts
